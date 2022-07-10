@@ -1,21 +1,25 @@
 import { reactive } from "../reactive"
 import { effect } from "../effect"
 
+interface IState {
+  age: number;
+}
+
 describe('effect', () => {
   it('happy path', () => {
     const user = reactive({
       age: 10
-    })
+    });
 
-    let nextAge
+    let nextAge;
     effect(() => {
-      nextAge = user.age + 1
-    })
+      nextAge = (user as IState).age + 1
+    });
 
-    expect(nextAge).toBe(10)
+    expect(nextAge).toBe(10);
 
     // update
-    user.age++
-    expect(nextAge).toBe(11)
+    (user as IState).age++;
+    expect(nextAge).toBe(11);
   })
 })
